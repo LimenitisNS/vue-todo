@@ -1,8 +1,11 @@
-import { createStore } from "vuex";
+import Vuex, { StoreOptions } from "vuex";
+import todo from "./modules/todo";
+import { RootState } from "@/store/type";
 
-export default createStore({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
-});
+const store: StoreOptions<RootState> = {
+  modules: {
+    todo: todo,
+  },
+};
+
+export default new Vuex.Store<RootState>(store);
