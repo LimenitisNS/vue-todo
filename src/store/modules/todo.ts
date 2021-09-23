@@ -15,7 +15,7 @@ const mutations: MutationTree<StateType> = {
   },
 };
 
-const getters: GetterTree<StateType, RootState> = {
+export const getters: GetterTree<StateType, RootState> = {
   list: (state): Array<string> => state.list,
 };
 

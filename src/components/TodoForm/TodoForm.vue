@@ -1,10 +1,12 @@
 <template>
-  <el-form v-model="form" class="form">
+  <el-form v-model="form" class="todo-form">
     <el-form-item prop="value">
-      <el-input v-model="form.value" />
+      <el-input v-model="form.value" class="todo-form__input" />
     </el-form-item>
     <el-form-item>
-      <el-button @click="handleCreateTodo">Создать</el-button>
+      <el-button class="todo-form__button" @click="handleCreateTodo"
+        >Создать</el-button
+      >
     </el-form-item>
   </el-form>
 </template>

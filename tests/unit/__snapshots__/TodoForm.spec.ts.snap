@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TodoForm snapshot 1`] = `
+<el-form
+  class="todo-form"
+  modelvalue="[object Object]"
+>
+  <el-form-item
+    prop="value"
+  >
+    <el-input
+      class="todo-form__input"
+      modelvalue=""
+    />
+  </el-form-item>
+  <el-form-item>
+    <el-button
+      class="todo-form__button"
+    >
+      Создать
+    </el-button>
+  </el-form-item>
+</el-form>
+`;
