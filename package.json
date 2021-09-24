@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test": "vue-cli-service test:unit --coverage",
     "lint": "vue-cli-service lint",
     "hell": "vue-cli-service serve"
   },

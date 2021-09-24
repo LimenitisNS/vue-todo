@@ -1,14 +1,6 @@
 import { mount } from "@vue/test-utils";
 import TodoForm from "@/components/TodoForm/TodoForm.vue";
-import { createStore } from "vuex";
-
-const actions = {
-  addTodo: jest.fn(),
-};
-
-const store = createStore({
-  actions,
-});
+import store from "@/store";
 
 describe("TodoForm", () => {
   it("snapshot", () => {
@@ -35,10 +27,10 @@ describe("TodoForm", () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(actions.addTodo).not.toHaveBeenCalled();
-
     button.trigger("click");
 
-    expect(actions.addTodo).toHaveBeenCalled();
+    await wrapper.vm.$nextTick();
+
+    expect(store.getters["list"].length).toBe(1);
   });
 });
