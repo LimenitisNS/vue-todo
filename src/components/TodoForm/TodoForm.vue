@@ -8,6 +8,13 @@
         >Создать</el-button
       >
     </el-form-item>
+    <el-form-item prop="group">
+      <el-radio-group v-model="form.group" @change="handleChangeGrouping">
+        <el-radio-button label="Все"></el-radio-button>
+        <el-radio-button label="Выполненные"></el-radio-button>
+        <el-radio-button label="Не выполненные"></el-radio-button>
+      </el-radio-group>
+    </el-form-item>
   </el-form>
 </template>
 
@@ -23,6 +30,7 @@ export default defineComponent({
     const data = reactive({
       form: {
         value: "",
+        group: "Все",
       },
     });
 
@@ -31,10 +39,17 @@ export default defineComponent({
       data.form.value = "";
     };
 
+    const handleChangeGrouping = (): void => {
+      store.dispatch("changeGrouping", data.form.group).then(() => {
+        data.form.group = store.getters.grouping;
+      });
+    };
+
     return {
       ...toRefs(data),
 
       handleCreateTodo,
+      handleChangeGrouping,
     };
   },
 });

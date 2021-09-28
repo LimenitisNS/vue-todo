@@ -1,15 +1,29 @@
 <template>
-  <ul class="todo-list">
-    <li v-for="(item, key) in getTodos" :key="key" class="todo-list__item">
-      <el-button
-        class="todo-list__remove-button"
-        @click="handleRemoveTodo(item.id)"
-      >
-        Удалить
-      </el-button>
-      <span>{{ item.title }}</span>
-    </li>
-  </ul>
+  <div>
+    <el-input
+      :model-value="searchValue"
+      suffix-icon="el-icon-search"
+      placeholder="Поиск"
+      @input="handleSearchTodo"
+    />
+    <ul class="todo-list">
+      <li v-for="(item, key) in getTodos" :key="key" class="todo-list__item">
+        <el-checkbox
+          :model-value="item.isChecked"
+          @change="handleCheckTodo(item.id)"
+          class="todo-list__checkbox"
+        >
+          <span>{{ item.title }}</span>
+        </el-checkbox>
+        <el-button
+          class="todo-list__remove-button"
+          @click="handleRemoveTodo(item.id)"
+        >
+          Удалить
+        </el-button>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script lang="ts">
@@ -25,13 +39,31 @@ export default defineComponent({
       return store.getters.list;
     });
 
+    const searchValue = computed(() => {
+      return store.getters.filter;
+    });
+
     const handleRemoveTodo = (id: string) => {
       store.dispatch("removeTodo", id);
+    };
+
+    const handleCheckTodo = (id: string) => {
+      store.dispatch("checkTodo", id);
+    };
+
+    const handleSearchTodo = (event: InputEvent) => {
+      console.log(123, event);
+      const target = event.target as HTMLInputElement;
+      if (target) {
+        store.dispatch("filter", target.value);
+      }
     };
 
     return {
       getTodos,
       handleRemoveTodo,
+      handleCheckTodo,
+      handleSearchTodo,
     };
   },
 });
