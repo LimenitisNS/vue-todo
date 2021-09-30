@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-input
+      ref="input"
       :model-value="searchValue"
       suffix-icon="el-icon-search"
       placeholder="Поиск"
@@ -13,7 +14,12 @@
           @change="handleCheckTodo(item.id)"
           class="todo-list__checkbox"
         >
-          <span>{{ item.title }}</span>
+          <span
+            class="todo-list__title"
+            :class="{ 'todo-list__title--completed': item.isChecked }"
+          >
+            {{ item.title }}
+          </span>
         </el-checkbox>
         <el-button
           class="todo-list__remove-button"
@@ -36,6 +42,7 @@ export default defineComponent({
     const store = useStore();
 
     const getTodos = computed(() => {
+      console.table(store.getters.list);
       return store.getters.list;
     });
 
@@ -51,12 +58,8 @@ export default defineComponent({
       store.dispatch("checkTodo", id);
     };
 
-    const handleSearchTodo = (event: InputEvent) => {
-      console.log(123, event);
-      const target = event.target as HTMLInputElement;
-      if (target) {
-        store.dispatch("filter", target.value);
-      }
+    const handleSearchTodo = (filterValue: string) => {
+      store.dispatch("filter", filterValue);
     };
 
     return {
@@ -64,6 +67,7 @@ export default defineComponent({
       handleRemoveTodo,
       handleCheckTodo,
       handleSearchTodo,
+      searchValue,
     };
   },
 });
@@ -77,6 +81,12 @@ export default defineComponent({
   &__item {
     &:not(:last-child) {
       margin-bottom: 10px;
+    }
+  }
+
+  &__title {
+    &--completed {
+      text-decoration: line-through;
     }
   }
 }

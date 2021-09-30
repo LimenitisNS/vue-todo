@@ -1,13 +1,15 @@
 <template>
   <el-form v-model="form" class="todo-form">
-    <el-form-item prop="value">
-      <el-input v-model="form.value" class="todo-form__input" />
-    </el-form-item>
-    <el-form-item>
-      <el-button class="todo-form__button" @click="handleCreateTodo"
-        >Создать</el-button
-      >
-    </el-form-item>
+    <div class="todo-form__input-group">
+      <el-form-item prop="value" class="todo-form__item">
+        <el-input ref="input" v-model="form.value" class="todo-form__input" />
+      </el-form-item>
+      <el-form-item>
+        <el-button class="todo-form__button" @click="handleCreateTodo">
+          Создать
+        </el-button>
+      </el-form-item>
+    </div>
     <el-form-item prop="group">
       <el-radio-group v-model="form.group" @change="handleChangeGrouping">
         <el-radio-button label="Все"></el-radio-button>
@@ -54,3 +56,20 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.todo-form {
+  &__input-group {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__item {
+    flex-grow: 1;
+  }
+
+  &__button {
+    margin-left: 10px;
+  }
+}
+</style>
