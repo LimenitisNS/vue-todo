@@ -23,6 +23,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from "vue";
 import { useStore } from "vuex";
+import { ElMessage } from "element-plus";
 
 export default defineComponent({
   name: "TodoForm",
@@ -37,8 +38,10 @@ export default defineComponent({
     });
 
     const handleCreateTodo = (): void => {
-      store.dispatch("addTodo", data.form.value);
-      data.form.value = "";
+      store.dispatch("addTodo", data.form.value).then((message) => {
+        console.log(message);
+        ElMessage(message);
+      });
     };
 
     const handleChangeGrouping = (): void => {

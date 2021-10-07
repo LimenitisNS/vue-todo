@@ -9,6 +9,7 @@
     "hell": "vue-cli-service serve"
   },
   "dependencies": {
+    "axios": "^0.22.0",
     "core-js": "^3.6.5",
     "element-plus": "^1.1.0-beta.12",
     "vue": "^3.0.0",

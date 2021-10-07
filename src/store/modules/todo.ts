@@ -1,6 +1,7 @@
 import { ActionTree, GetterTree, MutationTree } from "vuex";
 import { RootState } from "@/store/type";
 import { Todo } from "@/store/modules/todo.type";
+import { addTodo } from "@/api/todo";
 
 type StateType = {
   list: Array<Todo>;
@@ -21,12 +22,8 @@ const searchString = (item: string, substring: string): boolean => {
 };
 
 const mutations: MutationTree<StateType> = {
-  ADD_TODO: (state, item: string): void => {
-    state.list.push({
-      id: Math.random().toString(36).substr(2),
-      title: item,
-      isChecked: false,
-    });
+  ADD_TODO: (state, item: Todo): void => {
+    state.list.push(item);
   },
   REMOVE_TODO: (state, id: string): void => {
     state.list = state.list.filter((item: Todo) => item.id !== id);
@@ -71,7 +68,17 @@ export const getters: GetterTree<StateType, RootState> = {
 
 const actions: ActionTree<StateType, RootState> = {
   async addTodo({ commit }, data: string) {
-    commit("ADD_TODO", data);
+    return new Promise<string>((resolve, reject) => {
+      addTodo(data)
+        .then((response) => {
+          commit("ADD_TODO", response.data);
+          resolve("Add");
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+    });
   },
 
   async removeTodo({ commit }, id: string) {
